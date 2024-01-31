@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  webservice:
+    container_name: myapp
+    image: app.jar
+    build: .
+    ports:
+      - 8081:8080
+    networks:
+      - bootapp
+    depends_on:
+      - dbservice
+    environment:
+      MYSQL_HOST: mydb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+  dbservice:
+    container_name: mydb
+    image: mysql
+    ports:
+      - 3307:3306
+    networks:
+      - bootapp
+    environment:
+      MYSQL_DATABASE: security
+      MYSQL_ROOT_PASSWORD: root
+networks:
+  bootapp:
